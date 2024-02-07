@@ -9,6 +9,35 @@ function App() {
 
   // const clearInputValue = (value) => {}
 
+  // const calc = (value: string) => {
+  //   let num = 0
+
+  //   for(let i = 0; i < value.length; i++) {
+
+  //   }
+
+  //   return num
+  // }
+
+  const isColor = (letter: string, index: number): boolean => {
+    // console.log(index)
+
+    let sum = 0
+
+    list.forEach((item) => {
+      if (!index) {
+        console.log(letter, item[index])
+      }
+
+      if (letter === item[index]) {
+        // console.log()
+        sum++
+      }
+    })
+
+    return sum < 2 ? false : true
+  }
+
   const func = (word: string): boolean => {
     let isCorrect = true
     let sum = 0
@@ -97,12 +126,23 @@ function App() {
         <ol>
           {list.map((item, index) => (
             <li key={item} className="d-flex align-items-center gap-3">
-              <p className={func(item) ? '' : 'line'}>{item}</p>
+              <p className={func(item) ? '' : 'line'}>
+                {item.split('').map((letter, idx) => (
+                  <span
+                    className={isColor(letter, idx) ? 'colored' : ''}
+                    key={idx}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </p>
+
+              {/* <p>{calc(item)}</p> */}
 
               <input
                 type="text"
                 className="form-control form-control-sm"
-                placeholder="0"
+                placeholder="x"
                 onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                   changeCount(e, index)
                 }

@@ -9,6 +9,10 @@
   padding: 2rem;
 }
 
+.colored {
+  color: red;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
