@@ -35,14 +35,21 @@ function App() {
     return isCorrect
   }
 
-  const changeCount = (e: Event, index: number) => {
+  const changeCount = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const newArr = [...count]
-    newArr[index] = e.target.value
+    newArr[index] = e.target.value ?? ''
     setCount(newArr)
   }
 
+  const handlerInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
+
   useEffect(() => {
-    let newList = input
+    let newList: string[] | string = input
 
     newList = newList.replaceAll('NaN', ' ')
 
@@ -51,7 +58,7 @@ function App() {
     newList = newList.replaceAll(/\s+/g, ' ')
 
     newList = newList.split(' ')
-    newList = newList.filter((c) => {
+    newList = newList.filter((c: string) => {
       return c !== ''
     })
     setList(newList)
@@ -65,7 +72,7 @@ function App() {
       <div className="input-group mb-3">
         <input
           type="text"
-          onInput={(e) => setInput(e.target.value)}
+          onInput={handlerInput}
           value={input}
           className="form-control"
           placeholder="Recipient's username"
@@ -96,7 +103,9 @@ function App() {
                 type="text"
                 className="form-control form-control-sm"
                 placeholder="0"
-                onInput={(e) => changeCount(e, index)}
+                onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  changeCount(e, index)
+                }
                 value={count[index]}
               />
             </li>
