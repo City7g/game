@@ -7,21 +7,7 @@ function App() {
   const [list, setList] = useState<string[]>([])
   const [count, setCount] = useState<string[]>([])
 
-  // const clearInputValue = (value) => {}
-
-  // const calc = (value: string) => {
-  //   let num = 0
-
-  //   for(let i = 0; i < value.length; i++) {
-
-  //   }
-
-  //   return num
-  // }
-
   const isColor = (letter: string, index: number): boolean => {
-    // console.log(index)
-
     let sum = 0
 
     list.forEach((item) => {
@@ -30,7 +16,6 @@ function App() {
       }
 
       if (letter === item[index]) {
-        // console.log()
         sum++
       }
     })
@@ -38,28 +23,31 @@ function App() {
     return sum < 2 ? false : true
   }
 
-  const func = (word: string): boolean => {
+  const func = (word: string, index: number): boolean => {
+    if (count[index] !== '') return false
+
     let isCorrect = true
     let sum = 0
 
-    list.forEach((item, idx) => {
-      if (count[idx] === '') return
-      if (word === item) return
+    if (index)
+      list.forEach((item, idx) => {
+        if (count[idx] === '') return
+        if (word === item) return
 
-      const splitWord = word.split('')
-      const splitItem = item.split('')
+        const splitWord = word.split('')
+        const splitItem = item.split('')
 
-      for (let i = 0; i < splitWord.length; i++) {
-        if (splitWord[i] === splitItem[i]) {
-          sum++
+        for (let i = 0; i < splitWord.length; i++) {
+          if (splitWord[i] === splitItem[i]) {
+            sum++
+          }
         }
-      }
 
-      if (sum !== +count[idx]) {
-        isCorrect = false
-      }
-      sum = 0
-    })
+        if (sum !== +count[idx]) {
+          isCorrect = false
+        }
+        sum = 0
+      })
 
     return isCorrect
   }
@@ -126,7 +114,7 @@ function App() {
         <ol>
           {list.map((item, index) => (
             <li key={item} className="d-flex align-items-center gap-3">
-              <p className={func(item) ? '' : 'line'}>
+              <p className={func(item, index) ? '' : 'line'}>
                 {item.split('').map((letter, idx) => (
                   <span
                     className={isColor(letter, idx) ? 'colored' : ''}
